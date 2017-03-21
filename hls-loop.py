@@ -21,6 +21,12 @@ total_duration = sum(duration for duration, filename in files_and_durations)
 n_segments = len(files_and_durations)
 zero = time.time()
 
+@app.after_request
+def apply_cors(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET'
+    return response
+
 @app.route("/variant.m3u8")
 def variant():
     return Response("""#EXTM3U
